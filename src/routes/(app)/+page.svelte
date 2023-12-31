@@ -1,2 +1,2 @@
-<h1 class="text-center text-3xl">Welcome to SvelteKit</h1>
-<p>Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation</p>
+<h1 class="text-center text-3xl">Hey there</h1>
+<p>Hello</p>
