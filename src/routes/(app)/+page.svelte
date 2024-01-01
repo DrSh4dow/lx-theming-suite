@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { searchBarInput } from '$lib/stores/searchBarStore';
+
 	import Preview from './Preview.svelte';
 
 	type Theme = {
@@ -38,19 +40,30 @@
 
 <section class="w-full overflow-x-scroll rounded-lg border shadow-sm">
 	<div
-		class="grid w-full cursor-default select-none grid-cols-[min-content_min-content_1fr_min-content] text-sm"
+		class="grid w-full cursor-default grid-cols-[min-content_min-content_1fr_min-content] text-sm"
 	>
-		<h1 class="px-4 py-3 text-left align-middle font-medium text-muted-foreground">Preview</h1>
-		<h1 class="px-4 py-3 text-left align-middle font-medium text-muted-foreground">Name</h1>
-		<h1 class="px-4 py-3 text-left align-middle font-medium text-muted-foreground">Description</h1>
-		<h1 class="px-4 py-3 text-left align-middle font-medium text-muted-foreground">Select</h1>
+		<h1 class="select-none px-4 py-3 text-left align-middle font-medium text-muted-foreground">
+			Preview
+		</h1>
+		<h1 class="select-none px-4 py-3 text-left align-middle font-medium text-muted-foreground">
+			Name
+		</h1>
+		<h1 class="select-none px-4 py-3 text-left align-middle font-medium text-muted-foreground">
+			Description
+		</h1>
+		<h1 class="select-none px-4 py-3 text-left align-middle font-medium text-muted-foreground">
+			Select
+		</h1>
 		<hr class="col-span-full" />
-		{#each themes as theme}
+		{#each themes.filter((t) => t.name
+				.toLowerCase()
+				.trim()
+				.includes($searchBarInput.toLowerCase().trim())) as theme}
 			<div class="p-4">
 				<Preview src={theme.preview} />
 			</div>
-			<div class="flex md:min-w-32 lg:min-w-40 max-w-64 items-center p-4">
-				<h1>{theme.name}</h1>
+			<div class="flex max-w-64 items-center p-4 md:min-w-32 lg:min-w-40">
+				<h1 class="font-medium">{theme.name}</h1>
 			</div>
 			<div class="flex items-center p-4">
 				<h1 class="line-clamp-4 whitespace-pre-wrap break-normal">{theme.description}</h1>

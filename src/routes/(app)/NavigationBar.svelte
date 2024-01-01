@@ -4,7 +4,7 @@
 	import { ImageIcon, PaintbrushIcon, PaletteIcon, SettingsIcon, TextIcon } from 'lucide-svelte';
 </script>
 
-<nav class="h-full border-r pt-4">
+<nav class="h-full max-h-full overflow-y-scroll border-r pt-4">
 	<ul>
 		<li>
 			<a

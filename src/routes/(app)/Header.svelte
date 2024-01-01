@@ -1,21 +1,31 @@
 <script>
+	import { page } from '$app/stores';
+	import { searchBarInput } from '$lib/stores/searchBarStore';
 	import { currentTheme } from '$lib/stores/themeProvider';
 	import { cn } from '$lib/utils/cn';
 	import { MoonIcon, PaletteIcon, SearchIcon, SunIcon } from 'lucide-svelte';
 </script>
 
 <header
-	class="grid w-full cursor-default grid-cols-[64px_1fr] justify-center border-b sm:justify-normal md:grid-cols-[280px_1fr] bg-card"
+	class="grid w-full cursor-default grid-cols-[64px_1fr] justify-center border-b bg-card sm:justify-normal md:grid-cols-[160px_1fr] lg:grid-cols-[280px_1fr]"
 >
 	<div class="flex items-center justify-center gap-x-2 border-r md:justify-start md:px-8">
 		<PaletteIcon class="h-6 w-6" />
-		<h5 class="hidden select-none font-semibold md:block">Linux Theming Suite</h5>
+		<h5 class="hidden select-none font-semibold md:block">
+			<span class="hidden md:inline lg:hidden">LTS</span>
+			<span class="hidden lg:inline">Linux Theming Suite</span>
+		</h5>
 	</div>
 	<div class="flex items-center justify-between px-4 sm:px-8">
 		<label class="relative">
 			<input
 				type="text"
-				placeholder="Search themes..."
+				placeholder={$page.url.pathname.startsWith('/font-config')
+					? 'Search fonts...'
+					: $page.url.pathname.startsWith('/icons-config')
+						? 'Search icons...'
+						: 'Search themes...'}
+				bind:value={$searchBarInput}
 				class="form-input h-8 w-full appearance-none rounded-md border bg-background pl-8 text-foreground shadow-none focus:border-muted-foreground focus:ring-muted-foreground"
 			/>
 			<div class="absolute left-2.5 top-1/2 -translate-y-1/2">
