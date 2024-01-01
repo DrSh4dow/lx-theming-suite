@@ -1,2 +1,68 @@
-<h1 class="text-center text-3xl">Hey there</h1>
-<p>Hello</p>
+<script lang="ts">
+	import Preview from './Preview.svelte';
+
+	type Theme = {
+		preview: string;
+		name: string;
+		description: string;
+		path: string;
+	};
+
+	const themes: Theme[] = [
+		{
+			preview: '/test',
+			name: 'Gruvbox',
+			description: 'A retro groove color scheme',
+			path: 'src/theme/gruvbox.test'
+		},
+		{
+			preview: '/test',
+			name: 'Tokio Night',
+			description: 'A dark theme for Visual Studio Code and 50+ apps',
+			path: 'src/theme/tokio-night.test'
+		},
+		{
+			preview: '/test',
+			name: 'Nord',
+			description: 'An arctic, north-bluish color palette',
+			path: 'src/theme/nord.test'
+		},
+		{
+			preview: '/test',
+			name: 'Dracula',
+			description: 'A dark theme for Visual Studio Code and 50+ apps',
+			path: 'src/theme/dracula.test'
+		}
+	];
+</script>
+
+<section class="w-full overflow-x-scroll rounded-lg border shadow-sm">
+	<div
+		class="grid w-full cursor-default select-none grid-cols-[min-content_min-content_1fr_min-content] text-sm"
+	>
+		<h1 class="px-4 py-3 text-left align-middle font-medium text-muted-foreground">Preview</h1>
+		<h1 class="px-4 py-3 text-left align-middle font-medium text-muted-foreground">Name</h1>
+		<h1 class="px-4 py-3 text-left align-middle font-medium text-muted-foreground">Description</h1>
+		<h1 class="px-4 py-3 text-left align-middle font-medium text-muted-foreground">Select</h1>
+		<hr class="col-span-full" />
+		{#each themes as theme}
+			<div class="p-4">
+				<Preview src={theme.preview} />
+			</div>
+			<div class="flex md:min-w-32 lg:min-w-40 max-w-64 items-center p-4">
+				<h1>{theme.name}</h1>
+			</div>
+			<div class="flex items-center p-4">
+				<h1 class="line-clamp-4 whitespace-pre-wrap break-normal">{theme.description}</h1>
+			</div>
+			<div class="flex items-center justify-center p-4">
+				<button
+					type="button"
+					class="rounded-md bg-primary px-10 py-1.5 text-primary-foreground transition-colors duration-75 hover:bg-primary/80 active:bg-primary lg:px-14 xl:px-20"
+					>Apply</button
+				>
+			</div>
+			<hr class="col-span-full" />
+		{/each}
+	</div>
+</section>
