@@ -1,5 +1,6 @@
 <script lang="ts">
 	import Header from './Header.svelte';
+	import NavigationBar from './NavigationBar.svelte';
 </script>
 
 <main
@@ -7,7 +8,7 @@
 >
 	<Header />
 	<div class="grid grid-cols-[64px_1fr] md:grid-cols-[280px_1fr]">
-		<nav class="h-full border-r"></nav>
+		<NavigationBar />
 		<section class="overflow-y-scroll p-4 sm:p-8">
 			<slot />
 		</section>
