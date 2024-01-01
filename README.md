@@ -1,4 +1,4 @@
-# Linux Theming Suite
+# Linux Theming Suite (WIP)
 
 ## Introduction
 
