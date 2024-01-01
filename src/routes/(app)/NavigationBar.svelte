@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 	import { cn } from '$lib/utils/cn';
-	import { ImageIcon, PaintbrushIcon, PaletteIcon, TextIcon } from 'lucide-svelte';
+	import { ImageIcon, PaintbrushIcon, PaletteIcon, SettingsIcon, TextIcon } from 'lucide-svelte';
 </script>
 
 <nav class="h-full border-r pt-4">
@@ -24,7 +24,7 @@
 			<a
 				href="/qt-themes-config"
 				class={cn(
-					$page.url.pathname === '/qt-themes-config'
+					$page.url.pathname.startsWith('/qt-themes-config')
 						? 'text-gray-900 dark:text-gray-50'
 						: 'text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50',
 					'flex items-center gap-3 rounded-lg px-3 py-2 transition-all '
@@ -38,7 +38,7 @@
 			<a
 				href="/font-config"
 				class={cn(
-					$page.url.pathname === '/font-config'
+					$page.url.pathname.startsWith('/font-config')
 						? 'text-gray-900 dark:text-gray-50'
 						: 'text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50',
 					'flex items-center gap-3 rounded-lg px-3 py-2 transition-all '
@@ -52,7 +52,7 @@
 			<a
 				href="/icons-config"
 				class={cn(
-					$page.url.pathname === '/icons-config'
+					$page.url.pathname.startsWith('/icons-config')
 						? 'text-gray-900 dark:text-gray-50'
 						: 'text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50',
 					'flex items-center gap-3 rounded-lg px-3 py-2 transition-all '
@@ -60,6 +60,20 @@
 			>
 				<PaintbrushIcon class="h-4 w-4" />
 				Icons
+			</a>
+		</li>
+		<li>
+			<a
+				href="/settings"
+				class={cn(
+					$page.url.pathname.startsWith('/settings')
+						? 'text-gray-900 dark:text-gray-50'
+						: 'text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50',
+					'flex items-center gap-3 rounded-lg px-3 py-2 transition-all '
+				)}
+			>
+				<SettingsIcon class="h-4 w-4" />
+				Settings
 			</a>
 		</li>
 	</ul>
