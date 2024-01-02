@@ -1,41 +1,19 @@
 <script lang="ts">
 	import { searchBarInput } from '$lib/stores/searchBarStore';
+	import { onMount } from 'svelte';
+	import type { z } from 'zod';
 
+	import { getGtkThemes } from '../../commands/getGtkThemes';
+	import type { gtkThemesSchema } from '../../commands/getGtkThemes';
 	import Preview from './Preview.svelte';
 
-	type Theme = {
-		preview: string;
-		name: string;
-		description: string;
-		path: string;
-	};
+	let themes: z.infer<typeof gtkThemesSchema> = [];
 
-	const themes: Theme[] = [
-		{
-			preview: '/test',
-			name: 'Gruvbox',
-			description: 'A retro groove color scheme',
-			path: 'src/theme/gruvbox.test'
-		},
-		{
-			preview: '/test',
-			name: 'Tokio Night',
-			description: 'A dark theme for Visual Studio Code and 50+ apps',
-			path: 'src/theme/tokio-night.test'
-		},
-		{
-			preview: '/test',
-			name: 'Nord',
-			description: 'An arctic, north-bluish color palette',
-			path: 'src/theme/nord.test'
-		},
-		{
-			preview: '/test',
-			name: 'Dracula',
-			description: 'A dark theme for Visual Studio Code and 50+ apps',
-			path: 'src/theme/dracula.test'
-		}
-	];
+	onMount(() => {
+		getGtkThemes()
+			.then((t) => (themes = t))
+			.catch(console.error);
+	});
 </script>
 
 <section class="w-full overflow-x-scroll rounded-lg border shadow-sm">

@@ -40,10 +40,12 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"@tauri-apps/api": "^1.5.3",
 		"class-variance-authority": "^0.7.0",
 		"clsx": "^2.1.0",
 		"lucide-svelte": "^0.303.0",
 		"tailwind-merge": "^2.2.0",
-		"tailwindcss-animate": "^1.0.7"
+		"tailwindcss-animate": "^1.0.7",
+		"zod": "^3.22.4"
 	}
 }
