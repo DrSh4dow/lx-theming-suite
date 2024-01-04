@@ -10,44 +10,18 @@ pub struct Theme {
 
 #[tauri::command]
 pub fn get_gtk_themes() -> Vec<Theme> {
-    let themes = vec![
-        Theme {
-            name: "Adwaita".to_string(),
-            description: "The default GNOME theme".to_string(),
-            preview: "/test".to_string(),
-            path: "src/theme/adwaita.test".to_string(),
-        },
-        Theme {
-            name: "Adwaita-dark".to_string(),
-            description: "The default GNOME dark theme".to_string(),
-            preview: "/test".to_string(),
-            path: "src/theme/adwaita-dark.test".to_string(),
-        },
-        Theme {
-            name: "Adwaita-highcontrast".to_string(),
-            description: "The default GNOME high contrast theme".to_string(),
-            preview: "/test".to_string(),
-            path: "src/theme/adwaita-highcontrast.test".to_string(),
-        },
-        Theme {
-            name: "Adwaita-highcontrast-inverted".to_string(),
-            description: "The default GNOME high contrast inverted theme".to_string(),
-            preview: "/test".to_string(),
-            path: "src/theme/adwaita-highcontrast-inverted.test".to_string(),
-        },
-        Theme {
-            preview: "/test".to_string(),
-            name: "Gruvbox".to_string(),
-            description: "A retro groove color scheme".to_string(),
-            path: "src/theme/gruvbox.test".to_string(),
-        },
-        Theme {
-            preview: "/test".to_string(),
-            name: "Tokio Night".to_string(),
-            description: "A dark theme for Visual Studio Code and 50+ apps".to_string(),
-            path: "src/theme/tokio-night.test".to_string(),
-        },
-    ];
+    tracing::info!("Walking through directories");
 
-    themes
+    if std::path::Path::new("/usr/share/themes").exists() {
+        for entry in walkdir::WalkDir::new("/usr/share/themes")
+            .follow_links(true)
+            .into_iter()
+            .filter_map(|e| e.ok())
+            .filter(|e| e.file_name().to_string_lossy().eq("index.theme"))
+        {
+            println!("{}", entry.path().display());
+        }
+    }
+
+    Vec::new()
 }

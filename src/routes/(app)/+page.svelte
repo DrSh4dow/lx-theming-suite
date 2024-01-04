@@ -1,10 +1,10 @@
 <script lang="ts">
+	import { getGtkThemes } from '$lib/commands/getGtkThemes';
+	import type { gtkThemesSchema } from '$lib/commands/getGtkThemes';
 	import { searchBarInput } from '$lib/stores/searchBarStore';
 	import { onMount } from 'svelte';
 	import type { z } from 'zod';
 
-	import { getGtkThemes } from '../../commands/getGtkThemes';
-	import type { gtkThemesSchema } from '../../commands/getGtkThemes';
 	import Preview from './Preview.svelte';
 
 	let themes: z.infer<typeof gtkThemesSchema> = [];
