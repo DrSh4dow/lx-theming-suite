@@ -14,6 +14,6 @@ considered stable or feature-complete.
 Please check back regularly for updates and progress.
 
 <p float="left">
-  <img alt="dark mode" src="https://github.com/DrSh4dow/lx-theming-suite/blob/main/assets/dark.png?raw=true" width="150" />
-  <img alt="light mode" src="https://github.com/DrSh4dow/lx-theming-suite/blob/main/assets/light.png?raw=true" width="150" /> 
+  <img alt="dark mode" src="https://github.com/DrSh4dow/lx-theming-suite/blob/main/assets/dark.png?raw=true" width="350" />
+  <img alt="light mode" src="https://github.com/DrSh4dow/lx-theming-suite/blob/main/assets/light.png?raw=true" width="350" /> 
 </p>
