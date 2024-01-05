@@ -13,5 +13,7 @@ icons, and fonts, ensuring a consistent and beautiful desktop environment.
 considered stable or feature-complete.
 Please check back regularly for updates and progress.
 
-![Dark mode](https://github.com/DrSh4dow/lx-theming-suite/blob/main/assets/dark.png?raw=true)
-![Light mode](https://github.com/DrSh4dow/lx-theming-suite/blob/main/assets/light.png?raw=true)
+<p float="left">
+  <img alt="dark mode" src="https://github.com/DrSh4dow/lx-theming-suite/blob/main/assets/dark.png?raw=true" width="150" />
+  <img alt="light mode" src="https://github.com/DrSh4dow/lx-theming-suite/blob/main/assets/light.png?raw=true" width="150" /> 
+</p>
