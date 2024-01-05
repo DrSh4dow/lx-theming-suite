@@ -12,3 +12,6 @@ icons, and fonts, ensuring a consistent and beautiful desktop environment.
 **Notice:** This application is currently in heavy development and is not
 considered stable or feature-complete.
 Please check back regularly for updates and progress.
+
+![Dark mode](https://github.com/DrSh4dow/lx-theming-suite/blob/main/assets/dark.png?raw=true)
+![Light mode](https://github.com/DrSh4dow/lx-theming-suite/blob/main/assets/light.png?raw=true)
