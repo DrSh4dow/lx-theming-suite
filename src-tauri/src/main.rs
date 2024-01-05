@@ -6,7 +6,9 @@ mod commands;
 use commands::get_gtk_themes;
 
 fn main() {
-    tracing_subscriber::fmt::init();
+    tracing_subscriber::fmt()
+        .with_max_level(tracing::Level::DEBUG)
+        .init();
 
     tauri::Builder::default()
         .invoke_handler(tauri::generate_handler![get_gtk_themes])

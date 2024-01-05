@@ -16,9 +16,9 @@
 	});
 </script>
 
-<section class="w-full overflow-x-scroll rounded-lg border shadow-sm">
-	<div
-		class="grid w-full cursor-default grid-cols-[min-content_min-content_1fr_min-content] text-sm"
+<section class="w-full overflow-x-scroll rounded-lg border shadow-sm @container">
+	<table
+		class="grid w-full cursor-default grid-cols-[min-content_max-content_1fr_min-content] text-sm @3xl:grid-cols-[min-content_max-content_1fr_min-content_min-content]"
 	>
 		<h1 class="select-none px-4 py-3 text-left align-middle font-medium text-muted-foreground">
 			Preview
@@ -28,6 +28,11 @@
 		</h1>
 		<h1 class="select-none px-4 py-3 text-left align-middle font-medium text-muted-foreground">
 			Description
+		</h1>
+		<h1
+			class="hidden select-none px-4 py-3 text-left align-middle font-medium text-muted-foreground @3xl:block"
+		>
+			Compatibility
 		</h1>
 		<h1 class="select-none px-4 py-3 text-left align-middle font-medium text-muted-foreground">
 			Select
@@ -46,6 +51,25 @@
 			<div class="flex items-center p-4">
 				<h1 class="line-clamp-4 whitespace-pre-wrap break-normal">{theme.description}</h1>
 			</div>
+			<div
+				class="hidden max-w-40 flex-col items-center justify-center gap-y-2 p-4 @md:min-w-24 @2xl:min-w-32 @3xl:flex @3xl:min-w-40 @4xl:max-w-64 @4xl:min-w-44 @7xl:min-w-64"
+			>
+				<figure
+					class="w-full rounded bg-green-200 px-2 py-1 text-sm text-green-800 dark:bg-green-600 dark:text-green-100"
+				>
+					GTK-2
+				</figure>
+				<figure
+					class="w-full rounded bg-green-200 px-2 py-1 text-sm text-green-800 dark:bg-green-600 dark:text-green-100"
+				>
+					GTK-3
+				</figure>
+				<figure
+					class="w-full rounded bg-red-200 px-2 py-1 text-sm text-red-800 dark:bg-red-600 dark:text-red-100"
+				>
+					GTK-4
+				</figure>
+			</div>
 			<div class="flex items-center justify-center p-4">
 				<button
 					type="button"
@@ -55,5 +79,5 @@
 			</div>
 			<hr class="col-span-full" />
 		{/each}
-	</div>
+	</table>
 </section>
