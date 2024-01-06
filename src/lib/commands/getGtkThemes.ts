@@ -26,5 +26,5 @@ export async function getGtkThemes() {
 		return [];
 	}
 
-	return themes.data;
+	return themes.data.sort((a, b) => (a.name.toLowerCase() < b.name.toLowerCase() ? -1 : 1));
 }
