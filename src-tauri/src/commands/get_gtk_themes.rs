@@ -2,17 +2,22 @@ use itertools::Itertools;
 use serde::Serialize;
 use std::path::Path;
 
-#[derive(Serialize, Debug)]
+#[derive(Serialize, Default)]
+pub struct Compatibility {
+    gtk2: bool,
+    gtk3: bool,
+    gtk4: bool,
+}
+
+#[derive(Serialize)]
 pub struct Theme {
     name: String,
     description: String,
     path: String,
-}
+    compatibility: Compatibility,
 
-impl PartialEq for Theme {
-    fn eq(&self, other: &Self) -> bool {
-        self.name == other.name
-    }
+    #[serde(skip_serializing)]
+    raw_entry: walkdir::DirEntry,
 }
 
 #[tauri::command]
@@ -44,6 +49,8 @@ pub fn get_gtk_themes() -> Vec<Theme> {
             name: String::from(""),
             description: String::from(""),
             path: entry.path().to_string_lossy().to_string(),
+            compatibility: Compatibility::default(),
+            raw_entry: entry,
         };
 
         for line in file_content.lines() {
@@ -63,6 +70,13 @@ pub fn get_gtk_themes() -> Vec<Theme> {
         Some(theme)
     })
     .unique_by(|t| t.name.clone())
+    .map(|t| {
+        if let Some(parent) = t.raw_entry.path().parent() {
+            tracing::debug!("{:?}", parent.to_string_lossy().to_string());
+        }
+
+        t
+    })
     .collect();
 
     themes
