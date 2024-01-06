@@ -5,7 +5,12 @@ export const gtkThemesSchema = z
 	.object({
 		name: z.string(),
 		description: z.string(),
-		path: z.string()
+		path: z.string(),
+		compatibility: z.object({
+			gtk2: z.boolean(),
+			gtk3: z.boolean(),
+			gtk4: z.boolean()
+		})
 	})
 	.array();
 

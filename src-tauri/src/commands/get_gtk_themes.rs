@@ -2,14 +2,14 @@ use itertools::Itertools;
 use serde::Serialize;
 use std::path::Path;
 
-#[derive(Serialize, Default)]
+#[derive(Serialize, Default, Debug)]
 pub struct Compatibility {
     gtk2: bool,
     gtk3: bool,
     gtk4: bool,
 }
 
-#[derive(Serialize)]
+#[derive(Serialize, Debug)]
 pub struct Theme {
     name: String,
     description: String,
@@ -70,8 +70,12 @@ pub fn get_gtk_themes() -> Vec<Theme> {
         Some(theme)
     })
     .unique_by(|t| t.name.clone())
-    .map(|t| {
+    .map(|mut t| {
         if let Some(parent) = t.raw_entry.path().parent() {
+            t.compatibility.gtk2 = parent.join("gtk-2.0/gtkrc").exists();
+            t.compatibility.gtk3 = parent.join("gtk-3.0/gtk.css").exists();
+            t.compatibility.gtk4 = parent.join("gtk-4.0/gtk.css").exists();
+
             tracing::debug!("{:?}", parent.to_string_lossy().to_string());
         }
 

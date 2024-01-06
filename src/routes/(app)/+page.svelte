@@ -2,6 +2,7 @@
 	import { getGtkThemes } from '$lib/commands/getGtkThemes';
 	import type { gtkThemesSchema } from '$lib/commands/getGtkThemes';
 	import { searchBarInput } from '$lib/stores/searchBarStore';
+	import { cn } from '$lib/utils/cn';
 	import { onMount } from 'svelte';
 	import type { z } from 'zod';
 
@@ -52,20 +53,35 @@
 				<h1 class="line-clamp-4 whitespace-pre-wrap break-normal">{theme.description}</h1>
 			</div>
 			<div
-				class="hidden max-w-40 flex-col items-center justify-center gap-y-2 p-4 @md:min-w-24 @2xl:min-w-32 @3xl:flex @3xl:min-w-40 @4xl:max-w-64 @4xl:min-w-44 @7xl:min-w-64"
+				class="hidden max-w-40 flex-col items-center justify-center gap-y-2 p-4 @md:min-w-24 @2xl:min-w-32 @3xl:flex @3xl:min-w-40 @4xl:min-w-44 @4xl:max-w-64 @7xl:min-w-64"
 			>
 				<figure
-					class="w-full rounded bg-green-200 px-2 py-1 text-sm text-green-800 dark:bg-green-600 dark:text-green-100"
+					class={cn(
+						'w-full rounded px-2 py-1 text-sm ',
+						theme.compatibility.gtk2
+							? 'bg-green-200 text-green-800 dark:bg-green-600 dark:text-green-100'
+							: 'bg-red-200 text-red-800 dark:bg-red-600 dark:text-red-100'
+					)}
 				>
 					GTK-2
 				</figure>
 				<figure
-					class="w-full rounded bg-green-200 px-2 py-1 text-sm text-green-800 dark:bg-green-600 dark:text-green-100"
+					class={cn(
+						'w-full rounded px-2 py-1 text-sm ',
+						theme.compatibility.gtk3
+							? 'bg-green-200 text-green-800 dark:bg-green-600 dark:text-green-100'
+							: 'bg-red-200 text-red-800 dark:bg-red-600 dark:text-red-100'
+					)}
 				>
 					GTK-3
 				</figure>
 				<figure
-					class="w-full rounded bg-red-200 px-2 py-1 text-sm text-red-800 dark:bg-red-600 dark:text-red-100"
+					class={cn(
+						'w-full rounded px-2 py-1 text-sm ',
+						theme.compatibility.gtk4
+							? 'bg-green-200 text-green-800 dark:bg-green-600 dark:text-green-100'
+							: 'bg-red-200 text-red-800 dark:bg-red-600 dark:text-red-100'
+					)}
 				>
 					GTK-4
 				</figure>
