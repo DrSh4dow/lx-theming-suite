@@ -43,7 +43,7 @@
 				.trim()
 				.includes($searchBarInput.toLowerCase().trim())) as theme}
 			<div class="p-4">
-				<Preview src={theme.preview} />
+				<Preview src={theme.path} />
 			</div>
 			<div class="flex max-w-64 items-center p-4 md:min-w-32 lg:min-w-40">
 				<h1 class="font-medium">{theme.name}</h1>

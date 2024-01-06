@@ -5,7 +5,6 @@ export const gtkThemesSchema = z
 	.object({
 		name: z.string(),
 		description: z.string(),
-		preview: z.string(),
 		path: z.string()
 	})
 	.array();
