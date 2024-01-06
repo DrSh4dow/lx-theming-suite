@@ -44,13 +44,13 @@
 				.trim()
 				.includes($searchBarInput.toLowerCase().trim())) as theme}
 			<div class="p-4">
-				<Preview src={theme.path} />
+				<Preview src={theme.name} />
 			</div>
 			<div class="flex max-w-64 items-center p-4 md:min-w-32 lg:min-w-40">
 				<h1 class="font-medium">{theme.name}</h1>
 			</div>
 			<div class="flex items-center p-4">
-				<h1 class="line-clamp-4 whitespace-pre-wrap break-normal">{theme.description}</h1>
+				<h1 class="line-clamp-4 whitespace-pre-wrap break-normal">{theme.description ?? ""}</h1>
 			</div>
 			<div
 				class="hidden max-w-40 flex-col items-center justify-center gap-y-2 p-4 @md:min-w-24 @2xl:min-w-32 @3xl:flex @3xl:min-w-40 @4xl:min-w-44 @4xl:max-w-64 @7xl:min-w-64"

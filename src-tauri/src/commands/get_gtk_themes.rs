@@ -1,87 +1,67 @@
-use itertools::Itertools;
-use serde::Serialize;
-use std::path::Path;
+use std::{fs, path::Path};
+use tauri::State;
 
-#[derive(Serialize, Default, Debug)]
-pub struct Compatibility {
-    gtk2: bool,
-    gtk3: bool,
-    gtk4: bool,
-}
-
-#[derive(Serialize, Debug)]
-pub struct Theme {
-    name: String,
-    description: String,
-    path: String,
-    compatibility: Compatibility,
-
-    #[serde(skip_serializing)]
-    raw_entry: walkdir::DirEntry,
-}
+use crate::state::{Compatibility, GTKTheme, GTKThemeStorage};
 
 #[tauri::command]
-pub fn get_gtk_themes() -> Vec<Theme> {
+pub fn get_gtk_themes(theme_storage: State<GTKThemeStorage>) -> Vec<GTKTheme> {
     tracing::debug!("Walking through directories");
-
-    let themes: Vec<Theme> = vec![
+    for entry in vec![
         Path::new("/usr/share/themes"),
         Path::new("~/.local/share/themes"),
         Path::new("~/.themes"),
     ]
     .into_iter()
-    .filter_map(|path| match path.exists() {
-        true => Some(path.to_string_lossy().to_string()),
-        false => None,
-    })
-    .flat_map(|path| walkdir::WalkDir::new(path).follow_links(true).into_iter())
-    .filter_map(|e| e.ok())
-    .filter(|e| {
-        e.file_name().to_string_lossy().eq("index.theme") && e.metadata().is_ok_and(|m| m.is_file())
-    })
-    .filter_map(|entry| {
-        let file_content = match std::fs::read_to_string(entry.path()) {
-            Ok(content) => content,
-            Err(_) => return None,
+    .filter_map(|path| fs::read_dir(path).ok())
+    .flatten()
+    .filter_map(|p| p.ok())
+    {
+        let mut theme_storage = match theme_storage.themes.lock() {
+            Ok(themes)
+                if !themes.contains_key(&entry.file_name().to_string_lossy().to_string()) =>
+            {
+                themes
+            }
+            _ => continue,
         };
 
-        let mut theme = Theme {
-            name: String::from(""),
-            description: String::from(""),
-            path: entry.path().to_string_lossy().to_string(),
-            compatibility: Compatibility::default(),
-            raw_entry: entry,
+        let file_name = entry.file_name().to_string_lossy().to_string();
+
+        let theme = GTKTheme {
+            name: entry.file_name().to_string_lossy().to_string(),
+            description: match std::fs::read_to_string(entry.path().join("index.theme")) {
+                Ok(content) => match content.lines().find(|l| l.starts_with("Comment=")) {
+                    Some(comment) => comment.split("Comment=").last().map(|desc| desc.to_owned()),
+                    None => None,
+                },
+                Err(_) => None,
+            },
+            compatibility: Compatibility {
+                gtk2: entry.path().join("gtk-2.0/gtkrc").exists(),
+                gtk3: entry.path().join("gtk-3.0/gtk.css").exists(),
+                gtk4: entry.path().join("gtk-4.0/gtk.css").exists(),
+            },
+            raw_entry: Some(entry),
         };
 
-        for line in file_content.lines() {
-            if line.starts_with("Name=") {
-                if let Some(name) = line.split("Name=").last() {
-                    theme.name = String::from(name);
-                };
-            }
-
-            if line.starts_with("Comment=") {
-                if let Some(comment) = line.split("Comment=").last() {
-                    theme.description = String::from(comment);
-                };
-            }
+        if !theme.compatibility.gtk2 && !theme.compatibility.gtk3 && !theme.compatibility.gtk4 {
+            continue;
         }
 
-        Some(theme)
-    })
-    .unique_by(|t| t.name.clone())
-    .map(|mut t| {
-        if let Some(parent) = t.raw_entry.path().parent() {
-            t.compatibility.gtk2 = parent.join("gtk-2.0/gtkrc").exists();
-            t.compatibility.gtk3 = parent.join("gtk-3.0/gtk.css").exists();
-            t.compatibility.gtk4 = parent.join("gtk-4.0/gtk.css").exists();
+        theme_storage.insert(file_name, theme);
+    }
 
-            tracing::debug!("{:?}", parent.to_string_lossy().to_string());
-        }
+    match theme_storage.themes.lock() {
+        Ok(themes) => themes
+            .values()
+            .map(|v| GTKTheme {
+                name: v.name.clone(),
+                description: v.description.clone(),
+                compatibility: v.compatibility,
+                raw_entry: None,
+            })
+            .collect(),
 
-        t
-    })
-    .collect();
-
-    themes
+        Err(_) => Vec::new(),
+    }
 }
